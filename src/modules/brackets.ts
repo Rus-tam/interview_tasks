@@ -27,8 +27,8 @@ export function checkBracketsPair(str: string): string {
   }
 
   if (brackets.length === 0) {
-    return 'Correct';
+    return 'Correct \n';
   } else {
-    return 'Incorrect';
+    return 'Incorrect \n';
   }
 }
