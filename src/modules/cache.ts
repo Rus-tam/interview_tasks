@@ -8,7 +8,7 @@ export class Cache<T> {
     this.ageCounter = new Map();
   }
 
-  public proxyMethod(key: string, fn: (...arg0: T[]) => T, ...arg: T[]): T {
+  public proxyMethod(key: string, fn: (...arg0: T[]) => T, arg: T[]): T {
     const value = this.getValue(key);
 
     if (value) {
@@ -30,7 +30,7 @@ export class Cache<T> {
     return value;
   }
 
-  public setItem(key: string, value: T): void {
+  private setItem(key: string, value: T): void {
     if (!this.cache.has(key)) {
       this.cache.set(key, value);
       this.ageCounter.set(key, 0);
