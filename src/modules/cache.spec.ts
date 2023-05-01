@@ -14,7 +14,23 @@ describe('Testing Cache class', () => {
   });
 
   test('Should set result of proxy function to cache', () => {
-    const value = cache.proxyMethod('first', proxyFunction, [2, 4, 5]);
+    cache.proxyMethod('first', proxyFunction, [2, 4, 5]);
+    const value = cache.getValue('first');
     expect(value).toEqual(11);
+  });
+
+  test('Should increase ageCounter value for non-called item after every getValue method call', () => {
+    cache.proxyMethod('first', proxyFunction, [1, 2, 3]);
+    cache.proxyMethod('second', proxyFunction, [1, 2, 3]);
+    cache.getValue('first');
+    cache.getValue('first');
+    expect(cache.ageCounter.get('second')).toEqual(2);
+  });
+
+  test('Should set 0 for ageCounter value for called key', () => {
+    cache.proxyMethod('first', proxyFunction, [1, 2, 3]);
+    cache.getValue('first');
+    cache.getValue('first');
+    expect(cache.ageCounter.get('second'));
   });
 });
