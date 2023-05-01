@@ -13,6 +13,7 @@ export class Cache<T> {
     if (value) {
       this.ageCounter.set(key, 0);
       this.increaseAgeCounterValue(key);
+      this.deleteItemWithMaxAgeCounterValue();
     }
     return value;
   }
@@ -22,28 +23,38 @@ export class Cache<T> {
       this.cache.set(key, value);
       this.ageCounter.set(key, 0);
       this.increaseAgeCounterValue(key);
+      this.deleteItemWithMaxAgeCounterValue();
     }
   }
 
   // Метод увеличивает счетчик давности для всех ключей, кроме заданного
   private increaseAgeCounterValue(key: string) {
-    const allKeys: string[] = [];
     for (const item of this.ageCounter.keys()) {
       item !== key ? this.ageCounter.set(item, (this.ageCounter.get(item) ?? 0) + 1) : null;
     }
   }
 
   //   Метод удаляет запись с максимальным значением счетчика давности
-  private deleteItemWithMaxAgeCounterValue() {}
+  private deleteItemWithMaxAgeCounterValue() {
+    let maxKey: string = '';
+    this.ageCounter.forEach((value, key) => {
+      if (value > this.maxAge) {
+        maxKey = key;
+      }
+    });
+    maxKey !== '' ? this.ageCounter.delete(maxKey) && this.cache.delete(maxKey) : null;
+  }
 }
 
-const cache = new Cache<number>(10);
+const cache = new Cache<number>(2);
 
 cache.setItem('1', 11);
 console.log(cache.ageCounter);
 cache.setItem('2', 22);
 console.log(cache.ageCounter);
 cache.setItem('3', 33);
+console.log(cache.ageCounter);
+cache.setItem('4', 44);
 console.log(cache.ageCounter);
 console.log('=====================');
 console.log(' ');
