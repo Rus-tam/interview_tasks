@@ -17,7 +17,7 @@ export class Cache<T> {
     return value;
   }
 
-  public setItem(key: string, value: T) {
+  public setItem(key: string, value: T): void {
     if (!this.cache.has(key)) {
       this.cache.set(key, value);
       this.ageCounter.set(key, 0);
@@ -27,16 +27,14 @@ export class Cache<T> {
 
   // Метод увеличивает счетчик давности для всех ключей, кроме заданного
   private increaseAgeCounterValue(key: string) {
-    //   Находим все ключи объекта ageCounter
-    const allKeys = [...this.ageCounter.keys()];
-    //   Удаляем из массива allKeys заданный для этого метода ключ
-    const currentKeyIndex = allKeys.indexOf(key);
-    allKeys.splice(currentKeyIndex, 1);
-    // Увеличиваем на 1 значения счетчика давности для всех ключей
-    for (let item of allKeys) {
-      this.ageCounter.set(item, (this.ageCounter.get(item) ?? 0) + 1);
+    const allKeys: string[] = [];
+    for (const item of this.ageCounter.keys()) {
+      item !== key ? this.ageCounter.set(item, (this.ageCounter.get(item) ?? 0) + 1) : null;
     }
   }
+
+  //   Метод удаляет запись с максимальным значением счетчика давности
+  private deleteItemWithMaxAgeCounterValue() {}
 }
 
 const cache = new Cache<number>(10);
