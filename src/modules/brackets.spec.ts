@@ -1,5 +1,4 @@
 import { checkBracketsPair } from './brackets.ts';
-import exp from 'constants';
 
 describe('Testing checkBracketsPair function', () => {
   test('Should check the pairing of parentheses and receive `Correct`', () => {

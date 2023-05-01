@@ -1,11 +1,23 @@
 export class Cache<T> {
-  private maxAge: number;
+  readonly maxSize: number;
   public ageCounter: Map<string, number>;
   private cache: Map<string, T>;
   constructor(maxAge: number) {
-    this.maxAge = maxAge;
+    this.maxSize = maxAge;
     this.cache = new Map();
     this.ageCounter = new Map();
+  }
+
+  public proxyMethod(key: string, fn: (...arg0: T[]) => T, ...arg: T[]): T {
+    const value = this.getValue(key);
+
+    if (value) {
+      return value;
+    } else {
+      const fnResult = fn(...arg);
+      this.setItem(key, fnResult);
+      return fnResult;
+    }
   }
 
   public getValue(key: string): T | undefined {
@@ -36,28 +48,12 @@ export class Cache<T> {
 
   //   Метод удаляет запись с максимальным значением счетчика давности
   private deleteItemWithMaxAgeCounterValue() {
-    let maxKey: string = '';
+    let maxKey = '';
     this.ageCounter.forEach((value, key) => {
-      if (value > this.maxAge) {
+      if (value > this.maxSize) {
         maxKey = key;
       }
     });
     maxKey !== '' ? this.ageCounter.delete(maxKey) && this.cache.delete(maxKey) : null;
   }
 }
-
-const cache = new Cache<number>(2);
-
-cache.setItem('1', 11);
-console.log(cache.ageCounter);
-cache.setItem('2', 22);
-console.log(cache.ageCounter);
-cache.setItem('3', 33);
-console.log(cache.ageCounter);
-cache.setItem('4', 44);
-console.log(cache.ageCounter);
-console.log('=====================');
-console.log(' ');
-
-cache.getValue('1');
-console.log(cache.ageCounter);
