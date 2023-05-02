@@ -33,4 +33,20 @@ describe('Testing Cache class', () => {
     cache.getValue('first');
     expect(cache.ageCounter.get('second'));
   });
+
+  test('Should delete item with ageCounter value greater than maxSize', () => {
+    cache.proxyMethod('first', proxyFunction, [1, 2, 3]);
+    cache.proxyMethod('second', proxyFunction, [3, 4, 5]);
+    cache.proxyMethod('third', proxyFunction, [6, 7, 8]);
+    cache.proxyMethod('fourth', proxyFunction, [9, 10, 11]);
+    cache.proxyMethod('fifth', proxyFunction, [12, 13, 14]);
+
+    cache.getValue('second');
+    cache.getValue('third');
+    cache.getValue('third');
+    cache.getValue('fourth');
+    cache.getValue('fifth');
+
+    expect(cache.getValue('first')).toBe(undefined);
+  });
 });
