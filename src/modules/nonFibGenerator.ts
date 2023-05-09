@@ -9,12 +9,12 @@ export function* nonFibGenerator(N: number): Generator<number, void, unknown> {
     if (estNumber === currentNumber + nextNumber && nextNumber - currentNumber > 1) {
       for (let iter = currentNumber + 1; iter < nextNumber; iter++) {
         yield iter;
+        counter++;
       }
     }
     tempNextNumber = nextNumber;
     currentNumber = nextNumber;
     nextNumber = estNumber;
     estNumber = tempNextNumber + estNumber;
-    counter++;
   }
 }
