@@ -1,6 +1,5 @@
 import { checkBracketsPair } from './modules/brackets.ts';
 import { nonFibGenerator } from './modules/nonFibGenerator.ts';
-import { type } from 'os';
 
 // A1. Скобки
 function getInputA1(): Promise<string> {
