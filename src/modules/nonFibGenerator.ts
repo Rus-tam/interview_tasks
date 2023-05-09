@@ -8,28 +8,22 @@ export function* nonFibGenerator(N: number) {
   let i = 0;
   let m = 0;
 
-  while (n <= N) {
-    if (estNumber === currentNumber + nextNumber) {
-      fibArr.push(currentNumber);
+  while (n < N) {
+    if (estNumber === currentNumber + nextNumber && nextNumber - currentNumber > 2) {
+      for (let iter = currentNumber + 1; iter < nextNumber; iter++) {
+        yield iter;
+      }
     }
     i = nextNumber;
     currentNumber = nextNumber;
     nextNumber = estNumber;
     estNumber = i + estNumber;
     n++;
-
-    if (fibArr.length > 10) {
-      m++;
-      if (!fibArr.includes(m)) {
-        yield m;
-      }
-      fibArr.length > 100 ? fibArr.splice(0, 10) : null;
-    }
   }
 }
 
-const fib = nonFibGenerator(2000);
+const fib = nonFibGenerator(10);
 
-for (let l = 0; l < 1000; l++) {
+for (let l = 0; l < 10; l++) {
   console.log(fib.next());
 }
