@@ -1,4 +1,4 @@
-export function* nonFibGenerator(N: number) {
+export function* nonFibGenerator(N: number): Generator<number, void, unknown> {
   let currentNumber = 0;
   let nextNumber = 1;
   let estNumber = 1;
@@ -6,7 +6,7 @@ export function* nonFibGenerator(N: number) {
   let tempNextNumber = 0;
 
   while (counter < N) {
-    if (estNumber === currentNumber + nextNumber && nextNumber - currentNumber > 2) {
+    if (estNumber === currentNumber + nextNumber && nextNumber - currentNumber > 1) {
       for (let iter = currentNumber + 1; iter < nextNumber; iter++) {
         yield iter;
       }
