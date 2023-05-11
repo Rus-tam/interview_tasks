@@ -3,10 +3,10 @@ import { Interface } from 'readline';
 
 export class DivideAndRule {
   reader: Interface;
-  wordsAmount: number;
-  stringAmount: number;
-  words: string[];
-  strings: string[];
+  private wordsAmount: number;
+  private stringAmount: number;
+  private words: string[];
+  private strings: string[];
   constructor() {
     this.reader = readline.createInterface({
       input: process.stdin,
@@ -26,7 +26,7 @@ export class DivideAndRule {
     return Number(await this.question(question));
   }
 
-  public async setString(question: string): Promise<string[]> {
+  private async setString(question: string): Promise<string[]> {
     const strings: string[] = [];
     for (let i = 0; i < this.wordsAmount; i++) {
       const word = await this.question(`${question} ${i + 1}: `);
@@ -35,7 +35,7 @@ export class DivideAndRule {
     return strings;
   }
 
-  public async getInitialData() {
+  public async getInitialData(): Promise<void> {
     this.wordsAmount = await this.setNumber('Введите количество слов: ');
     this.words = await this.setString('Введите слово');
 
