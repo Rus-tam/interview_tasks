@@ -29,21 +29,38 @@ export class DivideAndRule {
   private async setString(question: string): Promise<string[]> {
     const strings: string[] = [];
     for (let i = 0; i < this.wordsAmount; i++) {
-      const word = await this.question(`${question} ${i + 1}: `);
-      strings.push(word);
+      const string = await this.question(`${question} ${i + 1}: `);
+      strings.push(string.toLowerCase());
     }
     return strings;
   }
 
-  public async getInitialData(): Promise<void> {
+  private async setInitialData(): Promise<void> {
     this.wordsAmount = await this.setNumber('Введите количество слов: ');
     this.words = await this.setString('Введите слово');
 
     this.stringAmount = await this.setNumber('Введите количество строк: ');
     this.strings = await this.setString('Введите строку');
   }
+
+  public async findConcatenation(): Promise<void> {
+    await this.setInitialData();
+    for (let word of this.words) {
+      for (let element of this.words) {
+        let variant1 = word + element;
+        let variant2 = element + word;
+        if (this.strings.includes(variant1)) {
+          console.log(`Строка полученная конкатенацией: ${variant1}`);
+        }
+        if (this.strings.includes(variant2)) {
+          console.log(`Строка полученная конкатенацией: ${variant2}`);
+        }
+        this.reader.close();
+      }
+    }
+  }
 }
 
 const item = new DivideAndRule();
 
-item.getInitialData();
+item.findConcatenation();
