@@ -2,37 +2,48 @@ import * as readline from 'readline';
 import { Interface } from 'readline';
 
 export class DivideAndRule {
-  rl: Interface;
+  reader: Interface;
   wordsAmount: number;
+  stringAmount: number;
   words: string[];
+  strings: string[];
   constructor() {
-    this.rl = readline.createInterface({
+    this.reader = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
+    this.stringAmount = 0;
     this.wordsAmount = 0;
     this.words = [];
+    this.strings = [];
   }
 
-  public enterNumberOfWords() {
-    this.rl.question('Введите количество слов: ', (answer: string) => {
-      this.wordsAmount = Number(answer);
-      this.enterWords();
-    });
+  private question(theQuestion: string): Promise<string> {
+    return new Promise((resolve) => this.reader.question(theQuestion, (answer) => resolve(answer)));
   }
 
-  private enterWords() {
-    this.rl.question('Введите слово ', (answer: string) => {
-      this.words.push(answer.trim());
-      if (this.words.length === this.wordsAmount) {
-        // this.rl.close();
-      } else {
-        this.enterWords();
-      }
-    });
+  private async setNumber(question: string): Promise<number> {
+    return Number(await this.question(question));
+  }
+
+  public async setString(question: string): Promise<string[]> {
+    const strings: string[] = [];
+    for (let i = 0; i < this.wordsAmount; i++) {
+      const word = await this.question(`${question} ${i + 1}: `);
+      strings.push(word);
+    }
+    return strings;
+  }
+
+  public async getInitialData() {
+    this.wordsAmount = await this.setNumber('Введите количество слов: ');
+    this.words = await this.setString('Введите слово');
+
+    this.stringAmount = await this.setNumber('Введите количество строк: ');
+    this.strings = await this.setString('Введите строку');
   }
 }
 
 const item = new DivideAndRule();
 
-item.enterNumberOfWords();
+item.getInitialData();
