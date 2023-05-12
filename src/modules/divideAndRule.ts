@@ -1,5 +1,6 @@
 import * as readline from 'readline';
 import { Interface } from 'readline';
+import { IResultC4 } from '../interfaces/IResultC4.ts';
 
 export class DivideAndRule {
   reader: Interface;
@@ -42,23 +43,50 @@ export class DivideAndRule {
     this.stringAmount = await this.setNumber('Введите количество строк: ');
     this.strings = await this.setString('Введите строку', this.stringAmount);
   }
-
   public async findConcatenation(): Promise<void> {
+    const count: IResultC4 = {};
     await this.setInitialData();
     for (let word of this.words) {
       for (let element of this.words) {
         let variant1 = word + element;
         let variant2 = element + word;
+
         if (this.strings.includes(variant1)) {
-          console.log(`Строка полученная конкатенацией: ${variant1}`);
+          count[variant1] === undefined ? (count[variant1] = []) : null;
+          !count[variant1].includes(`${word}:${element}`) ? count[variant1].push(`${word}:${element}`) : null;
         }
         if (this.strings.includes(variant2)) {
-          console.log(`Строка полученная конкатенацией: ${variant2}`);
+          count[variant2] === undefined ? (count[variant2] = []) : null;
+          !count[variant2].includes(`${element}:${word}`) ? count[variant2].push(`${element}:${word}`) : null;
         }
-        this.reader.close();
       }
     }
+    console.log(count);
   }
+
+  // public async findConcatenation(): Promise<void> {
+  //   const concatCount: IConcatCount = {};
+  //   const result: IResultC4 = {};
+  //   await this.setInitialData();
+  //   for (let word of this.words) {
+  //     for (let element of this.words) {
+  //       let variant1 = word + element;
+  //       let variant2 = element + word;
+  //       concatCount[`${word}:${element}`] = [0, -1];
+  //       concatCount[`${element}:${word}`] = [0, -1];
+  //       if (this.strings.includes(variant1)) {
+  //         concatCount[`${word}:${element}`][0] = concatCount[`${word}:${element}`][0] + 1;
+  //         concatCount[`${word}:${element}`][1] = this.strings.indexOf(variant1);
+  //       }
+  //       if (this.strings.includes(variant2)) {
+  //         concatCount[`${element}:${word}`][0] = concatCount[`${element}:${word}`][0] + 1;
+  //         concatCount[`${element}:${word}`][1] = this.strings.indexOf(variant2);
+  //       }
+  //     }
+  //   }
+  //   console.log(concatCount);
+  //   this.reader.close();
+  // }
 }
 
 const item = new DivideAndRule();
