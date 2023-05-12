@@ -1,3 +1,5 @@
+import { IVariants } from './IVariants.ts';
+
 export interface IResultC4 {
-  [key: string]: string[];
+  [key: string]: IVariants;
 }

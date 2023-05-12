@@ -43,49 +43,68 @@ export class DivideAndRule {
     this.stringAmount = await this.setNumber('Введите количество строк: ');
     this.strings = await this.setString('Введите строку', this.stringAmount);
   }
+
   public async findConcatenation(): Promise<void> {
     const count: IResultC4 = {};
     await this.setInitialData();
+
+    // Сложное мудренное решение
     for (let word of this.words) {
       for (let element of this.words) {
         let variant1 = word + element;
         let variant2 = element + word;
-
         if (this.strings.includes(variant1)) {
-          count[variant1] === undefined ? (count[variant1] = []) : null;
-          !count[variant1].includes(`${word}:${element}`) ? count[variant1].push(`${word}:${element}`) : null;
+          count[variant1] === undefined
+            ? (count[variant1] = { variantCount: 0, variantString: '', variants: [] })
+            : null;
+          if (!count[variant1].variants.includes(`${word}:${element}`)) {
+            count[variant1].variants.push(`${word}:${element}`);
+            count[variant1].variantString = count[variant1].variantString + ' ' + `${word}:${element}`;
+            count[variant1].variantCount++;
+          }
         }
         if (this.strings.includes(variant2)) {
-          count[variant2] === undefined ? (count[variant2] = []) : null;
-          !count[variant2].includes(`${element}:${word}`) ? count[variant2].push(`${element}:${word}`) : null;
+          count[variant2] === undefined
+            ? (count[variant2] = { variantCount: 0, variantString: '', variants: [] })
+            : null;
+          if (!count[variant2].variants.includes(`${element}:${word}`)) {
+            count[variant2].variants.push(`${element}:${word}`);
+            count[variant2].variantString = count[variant2].variantString + ' ' + `${element}:${word}`;
+            count[variant2].variantCount++;
+          }
         }
       }
     }
-    console.log(count);
+    console.log('Результаты: ');
+    for (let item of Object.keys(count)) {
+      console.log(`${count[item].variantCount}${count[item].variantString}`);
+    }
+
+    this.reader.close();
   }
 
   // public async findConcatenation(): Promise<void> {
-  //   const concatCount: IConcatCount = {};
-  //   const result: IResultC4 = {};
+  //   const count: IResultC4 = {};
   //   await this.setInitialData();
   //   for (let word of this.words) {
   //     for (let element of this.words) {
   //       let variant1 = word + element;
   //       let variant2 = element + word;
-  //       concatCount[`${word}:${element}`] = [0, -1];
-  //       concatCount[`${element}:${word}`] = [0, -1];
+  //
   //       if (this.strings.includes(variant1)) {
-  //         concatCount[`${word}:${element}`][0] = concatCount[`${word}:${element}`][0] + 1;
-  //         concatCount[`${word}:${element}`][1] = this.strings.indexOf(variant1);
+  //         count[variant1] === undefined ? (count[variant1] = []) : null;
+  //         !count[variant1].includes(`${word}:${element}`) ? count[variant1].push(`${word}:${element}`) : null;
   //       }
   //       if (this.strings.includes(variant2)) {
-  //         concatCount[`${element}:${word}`][0] = concatCount[`${element}:${word}`][0] + 1;
-  //         concatCount[`${element}:${word}`][1] = this.strings.indexOf(variant2);
+  //         count[variant2] === undefined ? (count[variant2] = []) : null;
+  //         !count[variant2].includes(`${element}:${word}`) ? count[variant2].push(`${element}:${word}`) : null;
   //       }
   //     }
   //   }
-  //   console.log(concatCount);
-  //   this.reader.close();
+  //   console.log('Результаты: ');
+  //   for (let item of Object.keys(count)) {
+  //     console.log(`${count[item].length} ${count[item]}`);
+  //   }
   // }
 }
 
