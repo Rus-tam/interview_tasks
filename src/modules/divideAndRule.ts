@@ -26,9 +26,9 @@ export class DivideAndRule {
     return Number(await this.question(question));
   }
 
-  private async setString(question: string): Promise<string[]> {
+  private async setString(question: string, numberOfStr: number): Promise<string[]> {
     const strings: string[] = [];
-    for (let i = 0; i < this.wordsAmount; i++) {
+    for (let i = 0; i < numberOfStr; i++) {
       const string = await this.question(`${question} ${i + 1}: `);
       strings.push(string.toLowerCase());
     }
@@ -37,10 +37,10 @@ export class DivideAndRule {
 
   private async setInitialData(): Promise<void> {
     this.wordsAmount = await this.setNumber('Введите количество слов: ');
-    this.words = await this.setString('Введите слово');
+    this.words = await this.setString('Введите слово', this.wordsAmount);
 
     this.stringAmount = await this.setNumber('Введите количество строк: ');
-    this.strings = await this.setString('Введите строку');
+    this.strings = await this.setString('Введите строку', this.stringAmount);
   }
 
   public async findConcatenation(): Promise<void> {
