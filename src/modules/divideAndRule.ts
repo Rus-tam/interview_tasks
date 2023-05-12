@@ -82,32 +82,4 @@ export class DivideAndRule {
 
     this.reader.close();
   }
-
-  // public async findConcatenation(): Promise<void> {
-  //   const count: IResultC4 = {};
-  //   await this.setInitialData();
-  //   for (let word of this.words) {
-  //     for (let element of this.words) {
-  //       let variant1 = word + element;
-  //       let variant2 = element + word;
-  //
-  //       if (this.strings.includes(variant1)) {
-  //         count[variant1] === undefined ? (count[variant1] = []) : null;
-  //         !count[variant1].includes(`${word}:${element}`) ? count[variant1].push(`${word}:${element}`) : null;
-  //       }
-  //       if (this.strings.includes(variant2)) {
-  //         count[variant2] === undefined ? (count[variant2] = []) : null;
-  //         !count[variant2].includes(`${element}:${word}`) ? count[variant2].push(`${element}:${word}`) : null;
-  //       }
-  //     }
-  //   }
-  //   console.log('Результаты: ');
-  //   for (let item of Object.keys(count)) {
-  //     console.log(`${count[item].length} ${count[item]}`);
-  //   }
-  // }
 }
-
-const item = new DivideAndRule();
-
-item.findConcatenation();
