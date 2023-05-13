@@ -49,10 +49,10 @@ export class DivideAndRule {
     await this.setInitialData();
 
     // Сложное мудренное решение
-    for (let word of this.words) {
-      for (let element of this.words) {
-        let variant1 = word + element;
-        let variant2 = element + word;
+    for (const word of this.words) {
+      for (const element of this.words) {
+        const variant1 = word + element;
+        const variant2 = element + word;
         if (this.strings.includes(variant1)) {
           count[variant1] === undefined
             ? (count[variant1] = { variantCount: 0, variantString: '', variants: [] })
@@ -76,7 +76,7 @@ export class DivideAndRule {
       }
     }
     console.log('Результаты: ');
-    for (let item of Object.keys(count)) {
+    for (const item of Object.keys(count)) {
       console.log(`${count[item].variantCount}${count[item].variantString}`);
     }
 
