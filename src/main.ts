@@ -1,5 +1,6 @@
 import { checkBracketsPair } from './modules/brackets.ts';
 import { nonFibGenerator } from './modules/nonFibGenerator.ts';
+import { DivideAndRule } from './modules/divideAndRule.ts';
 
 // A1. Скобки
 function getInputA1(): Promise<string> {
@@ -38,6 +39,11 @@ async function main(): Promise<void> {
     const value: number | void = nonFib.next().value;
     typeof value === 'number' ? outputA1A2(value.toString()) : null;
   }
+
+  process.stdout.write('\n');
+  process.stdout.write('ПРОВЕРКА ЗАДАНИЯ C4 \n \n');
+  const instance = new DivideAndRule();
+  instance.findConcatenation();
 }
 
 main();
