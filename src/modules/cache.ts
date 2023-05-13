@@ -1,7 +1,7 @@
 export class Cache<T> {
   readonly maxSize: number;
   public ageCounter: Map<string, number>;
-  private cache: Map<string, T>;
+  public cache: Map<string, T>;
   constructor(maxAge: number) {
     this.maxSize = maxAge;
     this.cache = new Map();

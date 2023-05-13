@@ -1,6 +1,7 @@
 import { checkBracketsPair } from './modules/brackets.ts';
 import { nonFibGenerator } from './modules/nonFibGenerator.ts';
 import { DivideAndRule } from './modules/divideAndRule.ts';
+import { Cache } from './modules/cache.ts';
 
 // A1. Скобки
 function getInputA1(): Promise<string> {
@@ -38,6 +39,19 @@ async function main(): Promise<void> {
   for (let i = 0; i < inputA2; i++) {
     const value: number | void = nonFib.next().value;
     typeof value === 'number' ? outputA1A2(value.toString()) : null;
+  }
+
+  process.stdout.write('\n');
+  process.stdout.write('ПРОВЕРКА ЗАДАНИЯ B1 \n \n');
+  const cache = new Cache<number>(5);
+  const proxyFunction = (...args: number[]) => {
+    return args[0] * args[1];
+  };
+  for (let i = 0; i < 7; i++) {
+    cache.proxyMethod(`${i}`, proxyFunction, [i, i * 2]);
+    cache.getValue('1');
+    console.log(cache.cache);
+    console.log(' ');
   }
 
   process.stdout.write('\n');
