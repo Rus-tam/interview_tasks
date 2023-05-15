@@ -59,7 +59,7 @@ async function main(): Promise<void> {
   const instance = new DivideAndRule();
   instance.findConcatenation();
 
-  console.log('Временная сложность алгоритма будет равна O(n^2), где n-размерность массива');
+  console.log('Временная сложность алгоритма будет равна O(n^3), где n-размерность массива');
 }
 
 main();
