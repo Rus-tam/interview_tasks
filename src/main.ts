@@ -58,6 +58,8 @@ async function main(): Promise<void> {
   process.stdout.write('ПРОВЕРКА ЗАДАНИЯ C4 \n \n');
   const instance = new DivideAndRule();
   instance.findConcatenation();
+
+  console.log('Временная сложность алгоритма будет равна O(n^2), где n-размерность массива');
 }
 
 main();
